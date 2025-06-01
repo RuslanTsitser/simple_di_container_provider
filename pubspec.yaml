@@ -1,7 +1,8 @@
 name: simple_di_container_provider
 description: "A simple DI container provider for Flutter."
 version: 0.0.1
-homepage: https://github.com/ruslan-tsitser/simple_di_container_provider
+homepage: https://github.com/RuslanTsitser/simple_di_container_provider
+repository: https://github.com/RuslanTsitser/simple_di_container_provider
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
