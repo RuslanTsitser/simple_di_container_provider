@@ -11,29 +11,127 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# Simple DI Container Provider
+
+A lightweight and simple dependency injection container provider for Flutter applications. This package provides an easy way to manage and access services throughout your Flutter widget tree.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- 🚀 Simple and lightweight implementation
+- 🔄 Automatic initialization and disposal of services
+- 🎯 Type-safe service access
+- 🌳 Widget tree integration
+- ⚡️ Support for multiple service containers
+- 🛠️ Customizable initialization and disposal behavior
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add the package to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  simple_di_container_provider: ^0.0.1
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+1. Create your services container by implementing the `ServicesContainer` interface:
 
 ```dart
-const like = 'sample';
+class MyServicesContainer implements ServicesContainer {
+  const MyServicesContainer({required this.name});
+  final String name;
+
+  @override
+  Future<void> init() async {
+    // Initialize your services here
+  }
+
+  @override
+  Future<void> dispose() async {
+    // Clean up your services here
+  }
+}
 ```
+
+2. Wrap your app with `ServicesContainerProvider`:
+
+```dart
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ServicesContainerProvider<MyServicesContainer>(
+      servicesContainerBuilder: () => const MyServicesContainer(name: 'MyServicesContainer'),
+      child: const MaterialApp(home: MyHomePage()),
+    );
+  }
+}
+```
+
+3. Access your services container from any widget:
+
+```dart
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final servicesContainer = ServicesContainerProvider.of<MyServicesContainer>(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(servicesContainer.name),
+      ),
+      // ... rest of your widget
+    );
+  }
+}
+```
+
+### Configuration Options
+
+The `ServicesContainerProvider` widget accepts the following parameters:
+
+- `servicesContainerBuilder`: A function that creates your services container instance
+- `autoDispose` (default: true): Whether to automatically dispose the container when the provider is disposed
+- `autoInit` (default: true): Whether to automatically initialize the container when the provider is created
+- `initWidgetBuilder`: A widget to display while the container is initializing
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+### Multiple Containers
+
+You can use multiple service containers in your widget tree:
+
+```dart
+ServicesContainerProvider<Container1>(
+  servicesContainerBuilder: () => Container1(),
+  child: ServicesContainerProvider<Container2>(
+    servicesContainerBuilder: () => Container2(),
+    child: const MyApp(),
+  ),
+)
+```
+
+### Manual Initialization
+
+If you need more control over the initialization process, you can set `autoInit` to false and initialize the container manually:
+
+```dart
+ServicesContainerProvider<MyServicesContainer>(
+  servicesContainerBuilder: () => const MyServicesContainer(name: 'MyServicesContainer'),
+  autoInit: false,
+  child: const MyApp(),
+)
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
