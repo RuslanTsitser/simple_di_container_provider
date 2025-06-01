@@ -21,10 +21,12 @@ Verify MyServicesContainer1 instance is in context
         servicesContainerBuilder: () => MyServicesContainer1(),
         autoDispose: false,
         autoInit: false,
-        child: const MaterialApp(home: Scaffold(body: Center(child: Text('MyServicesContainer')))),
+        child: const MaterialApp(
+            home: Scaffold(body: Center(child: Text('MyServicesContainer')))),
       ));
       final context = tester.element(find.byType(Center));
-      final servicesContainer = ServicesContainerProvider.of<MyServicesContainer1>(context);
+      final servicesContainer =
+          ServicesContainerProvider.of<MyServicesContainer1>(context);
       expect(servicesContainer, isA<MyServicesContainer1>());
     },
   );
@@ -42,7 +44,8 @@ Verify dispose never called
         servicesContainerBuilder: () => container,
         autoDispose: true,
         autoInit: true,
-        child: const MaterialApp(home: Scaffold(body: Center(child: Text('MyServicesContainer')))),
+        child: const MaterialApp(
+            home: Scaffold(body: Center(child: Text('MyServicesContainer')))),
       ));
 
       await tester.pumpAndSettle();
@@ -66,13 +69,16 @@ Verify both of containers are in context
           servicesContainerBuilder: () => container2,
           autoDispose: false,
           autoInit: false,
-          child: const MaterialApp(home: Scaffold(body: Center(child: Text('MyServicesContainer')))),
+          child: const MaterialApp(
+              home: Scaffold(body: Center(child: Text('MyServicesContainer')))),
         ),
       ));
       final context1 = tester.element(find.byType(Center));
       final context2 = tester.element(find.byType(Center));
-      final servicesContainer1 = ServicesContainerProvider.of<MyServicesContainer1>(context1);
-      final servicesContainer2 = ServicesContainerProvider.of<MyServicesContainer2>(context2);
+      final servicesContainer1 =
+          ServicesContainerProvider.of<MyServicesContainer1>(context1);
+      final servicesContainer2 =
+          ServicesContainerProvider.of<MyServicesContainer2>(context2);
       expect(servicesContainer1, isA<MyServicesContainer1>());
       expect(servicesContainer2, isA<MyServicesContainer2>());
     },

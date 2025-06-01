@@ -6,7 +6,8 @@ import 'services_container.dart';
 /// - [autoDispose] - if true, the [ServicesContainer] will be disposed when the widget is disposed.
 /// - [autoInit] - if true, the [ServicesContainer] will be initialized when the widget is initialized.
 /// - [initWidgetBuilder] - a widget to build when the [ServicesContainer] is initializing.
-class ServicesContainerProvider<T extends ServicesContainer> extends StatefulWidget {
+class ServicesContainerProvider<T extends ServicesContainer>
+    extends StatefulWidget {
   const ServicesContainerProvider({
     super.key,
     required this.child,
@@ -34,7 +35,8 @@ class ServicesContainerProvider<T extends ServicesContainer> extends StatefulWid
   /// It uses [getInheritedWidgetOfExactType] to get the [ServicesContainer] from the context.
   /// It is safe to call this method from build method or from any other method.
   static T of<T extends ServicesContainer>(BuildContext context) {
-    final ServicesContainerInherited? result = context.getInheritedWidgetOfExactType<ServicesContainerInherited<T>>();
+    final ServicesContainerInherited? result =
+        context.getInheritedWidgetOfExactType<ServicesContainerInherited<T>>();
     if (result == null) {
       throw Exception('ServicesContainerInherited not found in context');
     }
@@ -46,10 +48,12 @@ class ServicesContainerProvider<T extends ServicesContainer> extends StatefulWid
   }
 
   @override
-  State<ServicesContainerProvider<T>> createState() => _ServicesContainerProviderState<T>();
+  State<ServicesContainerProvider<T>> createState() =>
+      _ServicesContainerProviderState<T>();
 }
 
-class _ServicesContainerProviderState<T extends ServicesContainer> extends State<ServicesContainerProvider<T>> {
+class _ServicesContainerProviderState<T extends ServicesContainer>
+    extends State<ServicesContainerProvider<T>> {
   late T _servicesContainer;
   late bool _isInitialized;
 
@@ -94,7 +98,8 @@ class _ServicesContainerProviderState<T extends ServicesContainer> extends State
 
 /// A widget that provides a [ServicesContainer] to its descendants.
 /// Use it only once in the widget tree.
-class ServicesContainerInherited<T extends ServicesContainer> extends InheritedWidget {
+class ServicesContainerInherited<T extends ServicesContainer>
+    extends InheritedWidget {
   const ServicesContainerInherited({
     super.key,
     required super.child,
